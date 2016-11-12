@@ -24,21 +24,22 @@ require 'odf/cell'
 module ODF
   class Row < Container
     contains :cells
-    attr_reader :number
+    attr_reader :number, :repeat
     attr_writer :style
 
     def initialize(number=0, opts={})
       @number = number
       @style = opts[:style]
+      @repeat = opts[:repeat]
     end
 
     def xml
       elem_attrs = {}
       elem_attrs['table:style-name'] = @style unless @style.nil?
+      elem_attrs['table:number-rows-repeated'] = @repeat unless @repeat.nil?
       Builder::XmlMarkup.new.tag! 'table:table-row', elem_attrs do |xml|
         xml << cells_xml
       end
     end
   end
 end
-
