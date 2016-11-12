@@ -23,6 +23,7 @@ module ODF
     def initialize(opts={})
       @elem_attrs = {}
       @elem_attrs['table:style-name'] = opts[:style] unless opts[:style].nil?
+      @elem_attrs['table:default-cell-style-name'] = opts[:'default-cell-style-name'] unless opts[:'default-cell-style-name'].nil?
     end
 
     def xml
@@ -30,4 +31,3 @@ module ODF
     end
   end
 end
-
