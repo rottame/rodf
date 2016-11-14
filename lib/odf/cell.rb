@@ -78,6 +78,7 @@ module ODF
       attrs['table:formula'] = opts[:formula] unless opts[:formula].nil?
       attrs['table:style-name'] = opts[:style] unless opts[:style].nil?
       attrs['table:number-columns-spanned'] = opts[:span] unless opts[:span].nil?
+      attrs['table:content-validation-name'] = opts[:validation_name] unless opts[:validation_name].nil?
       attrs['table:number-matrix-columns-spanned'] =
         attrs['table:number-matrix-rows-spanned'] = 1 if opts[:matrix_formula]
       attrs
@@ -101,4 +102,3 @@ module ODF
     end
   end
 end
-

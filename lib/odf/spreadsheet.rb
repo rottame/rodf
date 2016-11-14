@@ -24,10 +24,11 @@ require 'odf/document'
 require 'odf/hyperlink'
 require 'odf/span'
 require 'odf/table'
+require 'odf/content_validation'
 
 module ODF
   class Spreadsheet < Document
-    contains :tables, :data_styles
+    contains :tables, :data_styles, :content_validations
 
     def xml
       b = Builder::XmlMarkup.new
@@ -41,7 +42,8 @@ module ODF
               'xmlns:style' => "urn:oasis:names:tc:opendocument:xmlns:style:1.0",
               'xmlns:fo' => "urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0",
               'xmlns:number' => "urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0",
-              'xmlns:xlink' => "http://www.w3.org/1999/xlink" do
+              'xmlns:xlink' => "http://www.w3.org/1999/xlink",
+              'xmlns:of' => "urn:oasis:names:tc:opendocument:xmlns:of:1.2" do
       |xml|
         xml.tag! 'office:styles' do
           xml << default_styles_xml
@@ -52,6 +54,9 @@ module ODF
         end unless styles.empty? && data_styles.empty?
         xml.office:body do
           xml.office:spreadsheet do
+            xml.tag! 'table:content-validations' do
+              xml << content_validations_xml
+            end
             xml << tables_xml
           end
         end
@@ -61,4 +66,3 @@ module ODF
 
   SpreadSheet = Spreadsheet
 end
-
